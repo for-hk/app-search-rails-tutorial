@@ -1,7 +1,7 @@
 
 <div class="ruby-demo">
   <div class="site-background"></div>
-  <div class="search-demo <%= 'active-search' if @search_results&.any? %> -live-filtering">
+  <div id="display_mode" class="search-demo <%= 'active-search' if @search_results&.any? %> -live-filtering">
     <div class="search-demo__content">
 
       <%# Header %>
@@ -16,7 +16,7 @@
           </h3>
         </div>
 
-          <%= form_tag({}, {method: :get, class: 'search-demo__input-wrapper'}) do %>
+          <%= form_tag("/search/", {method: :post, class: 'search-demo__input-wrapper', remote: true}) do %>
             <%= text_field_tag(:q, params[:q], class: "search-demo__text-input", placeholder: "Search for Ruby gems...") %>
             <div class="form-check">
               <%= check_box_tag('popular', 1, params[:popular], class: 'form-check-input') %>
@@ -26,52 +26,34 @@
           <% end %>
       </div>
 
-
       <%# Results %>
       <div class="search-demo__body">
-        <% if @search_results&.any? %>
-          <div class="search-results">
+        
+            <div class="search-results">
 
-          <div class="results">
-            <div class="results__header">
-              <div class="results__result-count">
-                <% if @total_pages > 1 %>
-                  Page <strong><%= @current_page %></strong> of <strong><%= @total_pages %></strong>
-                <% end %>
-              </div>
-              <div class="results__powered-by powered-by">
-                <%= image_tag('powered-by@2x.png', alt: 'Powered by Swiftype') %>
-              </div>
-            </div>
-
-            <div class="results__body">
-              <ul>
-                <% @search_results.each do |rubygem| %>
-                  <li class="result">
-                    <div class="result__header">
-                      <div class="result__title"><%= link_to "#{rubygem.name}", ruby_gem_path(rubygem) %></div>
-
+                <div class="results">
+                <div class="results__header">
+                    <div class="results__result-count">
+                    
                     </div>
-
-                    <div class="result__body">
-                      <p class="result__description"><%= rubygem.info %></p>
-                      <div class="result__details">
-                        <p><strong>Downloads: </strong><%= number_with_delimiter(rubygem.downloads, :delimiter => ',') %></p>
-                        <p><strong>Authors: </strong><%= rubygem.authors %></p>
-                      </div>
+                    <div class="results__powered-by powered-by">
+                    <%= image_tag('powered-by@2x.png', alt: 'Powered by Swiftype') %>
                     </div>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
+                </div>
 
-            <div class="results__footer">
-              <%= render "pagination", total_pages: @total_pages, current_page: @current_page, query: params[:q] %>
+                <div class="results__body">
+                    <ul id="result_container">
+                      
+                    </ul>
+                </div>
+
+                <div class="results__footer">
+                    
+                </div>
             </div>
-          </div>
         </div>
-        <% end %>
-      </div>
+       
+    </div>
     </div>
   </div>
 </div>

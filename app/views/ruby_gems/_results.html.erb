@@ -1,0 +1,22 @@
+<% results.each do |rubygem| %>
+    <li class="result">
+        <div class="result__header">
+            <div class="result__title"><%= rubygem['name'] %></div>
+        </div>
+        <div class="result__body">
+            <p class="result__description"><%= rubygem['city'] %></p>
+            
+
+            <% tier_and_ratings = rubygem['tier_and_rating'].split("\n") %>
+            <% sub_tiers = rubygem['sub_tier'].split("\n") %>
+
+            <% tier_and_ratings.each_with_index do |rubygem, i | %>
+                <div class="result__details">
+                <p><strong><%= tier_and_ratings[i] %></strong> - <%= sub_tiers[i] %></p>
+                </div>
+            <% end %>
+        </div>
+
+    </li>
+    
+<% end %>
